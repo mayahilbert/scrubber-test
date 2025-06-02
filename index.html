@@ -75,13 +75,7 @@
         const containers = document.querySelectorAll(".video-container");
         let isScrubbing = false;
 
-        // Update fill based on playback progress
-        video.addEventListener("timeupdate", () => {
-            if (!isScrubbing && video.duration) {
-                const percent = (video.currentTime / video.duration) * 100;
-                fill.style.width = `${percent}%`;
-            }
-        });
+
         containers.forEach(container => {
             const video = container.querySelector("video");
             const overlay = container.querySelector(".scrub-overlay");
@@ -94,7 +88,13 @@
                 video.currentTime = percent * video.duration;
                 fill.style.width = `${percent * 100}%`;
             });
-
+        // Update fill based on playback progress
+        video.addEventListener("timeupdate", () => {
+            if (!isScrubbing && video.duration) {
+                const percent = (video.currentTime / video.duration) * 100;
+                fill.style.width = `${percent}%`;
+            }
+        });
             overlay.addEventListener("mouseenter", () => {
                 isScrubbing = true;
                 video.pause(); });
