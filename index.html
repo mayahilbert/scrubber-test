@@ -17,14 +17,16 @@
             align-items: center;
         }
 
-        .video-container, .video-container-2{
+        .video-container,
+        .video-container-2 {
             position: relative;
             width: 100%;
             max-width: 1280px;
             height: 100%;
         }
 
-        .video-container video, .video-container-2 video {
+        .video-container video,
+        .video-container-2 video {
             width: 100%;
             height: 100%;
             display: block;
@@ -59,32 +61,40 @@
 </head>
 
 <body>
-        <div class="video-container">
-            <video id="video" src="moonlight-clip-keyframed.mp4" preload="auto" loop autoplay muted></video>
-            <div class="scrub-overlay"></div>
-            <div class="progress-bar">
-                <div class="progress-fill"></div>
-            </div>
+    <div class="video-container">
+        <video id="video" src="moonlight-clip-keyframed.mp4" preload="auto" loop autoplay muted></video>
+        <div class="scrub-overlay"></div>
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
         </div>
+    </div>
 
-            <div class="video-container-2">
-            <video id="video" src="moonlight-clip-keyframed.mp4" preload="auto" controls></video>
-        </div>
+    <div class="video-container-2">
+        <video id="video" src="moonlight-clip-keyframed.mp4" preload="auto" controls></video>
+    </div>
     <script>
-        // Grab all video containers
-        const containers = document.querySelectorAll(".video-container");
-        let isScrubbing = false;
+            document.querySelectorAll(".video-container").forEach(container => {
+      const video = container.querySelector("video");
+      const overlay = container.querySelector(".scrub-overlay");
+      const fill = container.querySelector(".progress-fill");
+
+      let isScrubbing = false;
       let ready = false;
+
       // Wait until metadata is ready before allowing scrubbing
       video.addEventListener("loadedmetadata", () => {
         ready = Number.isFinite(video.duration);
       });
-        containers.forEach(container => {
-            const video = container.querySelector("video");
-            const overlay = container.querySelector(".scrub-overlay");
-            const fill = container.querySelector(".progress-fill");
 
- // Hover scrub behavior
+      // Playback-based progress
+      video.addEventListener("timeupdate", () => {
+        if (!isScrubbing && ready) {
+          const percent = (video.currentTime / video.duration) * 100;
+          fill.style.width = `${percent}%`;
+        }
+      });
+
+      // Hover scrub behavior
       overlay.addEventListener("mousemove", (e) => {
         if (!ready) return;
 
@@ -122,14 +132,7 @@
           }
         }
       });
-      // Playback-based progress
-      video.addEventListener("timeupdate", () => {
-        if (!isScrubbing && ready) {
-          const percent = (video.currentTime / video.duration) * 100;
-          fill.style.width = `${percent}%`;
-        }
-      });
-        });
+    });
     </script>
 </body>
 
