@@ -81,27 +81,44 @@
             const overlay = container.querySelector(".scrub-overlay");
             const fill = container.querySelector(".progress-fill");
 
-            overlay.addEventListener("mousemove", (e) => {
-                const rect = overlay.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const percent = x / rect.width;
-                video.currentTime = percent * video.duration;
-                fill.style.width = `${percent * 100}%`;
-            });
-        // Update fill based on playback progress
+ // Hover scrub behavior
+      overlay.addEventListener("mousemove", (e) => {
+        const rect = overlay.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const percent = Math.min(Math.max(x / rect.width, 0), 1);
+        video.currentTime = percent * video.duration;
+        fill.style.width = `${percent * 100}%`;
+      });
+
+      overlay.addEventListener("mouseenter", async () => {
+        isScrubbing = true;
+        try {
+          if (!video.paused) await video.play(); // wait for play to resolve if needed
+          video.pause();
+        } catch (err) {
+          if (err.name !== "AbortError") {
+            console.error("Video play error:", err);
+          }
+        }
+      });
+
+      overlay.addEventListener("mouseleave", async () => {
+        isScrubbing = false;
+        try {
+          await video.play();
+        } catch (err) {
+          if (err.name !== "AbortError") {
+            console.error("Video play error:", err);
+          }
+        }
+      });
+                    // Update fill based on playback progress
         video.addEventListener("timeupdate", () => {
             if (!isScrubbing && video.duration) {
                 const percent = (video.currentTime / video.duration) * 100;
                 fill.style.width = `${percent}%`;
             }
         });
-            overlay.addEventListener("mouseenter", () => {
-                isScrubbing = true;
-                video.pause(); });
-            overlay.addEventListener("mouseleave", () => {
-                        isScrubbing = false;
-                video.play();
-            });
         });
     </script>
 </body>
