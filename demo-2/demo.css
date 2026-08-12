@@ -275,8 +275,11 @@ canvas {
 
 .hover-surface {
   position: absolute;
-  inset: 0;
   z-index: 3;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 3rem;
   cursor: ew-resize;
   touch-action: none;
 }
