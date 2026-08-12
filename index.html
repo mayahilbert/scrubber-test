@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="icon" type="image/x-icon" href="./favicon.ico">
     <title>Scrubber Test</title>
     <style>
         body {
@@ -57,6 +58,18 @@
             width: 0%;
             transition: width 0.05s linear;
         }
+
+        .loading-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50px; /* Spinner size */
+    height: 50px; /* Spinner size */
+    background: pink;
+    background-size: cover;
+    transform: translate(-50%, -50%);
+    display: none; /* Hidden by default */
+}
     </style>
 </head>
 
@@ -66,8 +79,10 @@
         <div class="scrub-overlay"></div>
         <div class="progress-bar">
             <div class="progress-fill"></div>
+                <!--<div class="loading-spinner"></div>-->
         </div>
     </div>
+    <!--<script src="video-buffer.js"></script>-->
 
     <script src="keyboard-scrub.js"></script>
     <script src="hover-scrub.js"></script>

@@ -1,3 +1,4 @@
+document.addEventListener('DOMContentLoaded', (event) => {
 document.querySelectorAll(".video-container").forEach(container => {
     const video = container.querySelector("video");
     const overlay = container.querySelector(".scrub-overlay");
@@ -62,4 +63,4 @@ document.addEventListener("keydown", (e) => {
         video.currentTime = Math.max(0, video.currentTime - 1 / frameRate);
     }
 });
-
+});
