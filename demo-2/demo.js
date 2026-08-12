@@ -290,7 +290,8 @@ function updateScrub() {
   requestAnimationFrame(updateScrub);
 }
 
-//hoverSurface.addEventListener("pointerenter", () => video.pause());
+hoverSurface.addEventListener("pointerenter", () => video.pause());
+
 video.addEventListener("loadedmetadata", () => {
   showPosition(0);
   showMarkers();
