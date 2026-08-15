@@ -18,7 +18,8 @@
   --line-thin: 1px;
   --noise-opacity: 0.2;
   --page-padding: clamp(var(--space-2), 2vw, var(--space-4));
-  --content-width: min(calc(100vw - 2 * var(--page-padding)), calc(1280px - 2 * var(--page-padding)));
+  --content-width: min(calc(100vw - 2 * var(--page-padding)),
+      max(1280px, 70vw));
   --page-gutter: calc((100vw - var(--content-width)) / 2);
   background: var(--color-bg);
 }
@@ -279,7 +280,7 @@ canvas {
   right: 0;
   bottom: 0;
   left: 0;
-  height: 3rem;
+  height: 100%;
   cursor: ew-resize;
   touch-action: none;
 }
@@ -424,7 +425,6 @@ canvas {
 @media (orientation: landscape) and (max-height: 520px) {
   .console {
     --page-padding: var(--space-2);
-    --content-width: min(calc(100vw - 2 * var(--page-padding)), calc(1050px - 2 * var(--page-padding)));
     width: 100%;
     padding: var(--space-2);
   }
